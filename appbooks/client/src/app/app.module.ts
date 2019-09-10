@@ -14,8 +14,11 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { Page404Component } from './components/page404/page404.component';
 import { OffersComponent } from './components/offers/offers.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 // services
-import {DataApiService} from "./services/data-api.service";
+import { DataApiService } from 'src/app/services/data-api.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,9 @@ import {DataApiService} from "./services/data-api.service";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ DataApiService],
   bootstrap: [AppComponent]

@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   constructor() { }
-
+  public app_name = 'Books Store';
+  public isLogged = false;
   ngOnInit() {
   }
 
