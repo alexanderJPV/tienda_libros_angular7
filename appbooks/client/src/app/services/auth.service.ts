@@ -10,16 +10,18 @@ import { UserInterface } from "../models/user-interface";
 export class AuthService {
 
   constructor(private htttp: HttpClient) { }
+
   headers: HttpHeaders = new HttpHeaders({
     "Content-Type": "application/json"
   });
+  //registra usuarios nuevos por method post
   registerUser(name: string, email: string, password: string) {
     const url_api = "http://localhost:3000/api/Users";
     return this.htttp
       .post<UserInterface>(
         url_api,
         {
-          name: name,
+          username: name,
           email: email,
           password: password
         },
@@ -27,6 +29,7 @@ export class AuthService {
       )
       .pipe(map(data => data));
   }
+  //login usuarios con dos parametros email y password por method post
   loginuser(email: string, password: string): Observable<any> {
     const url_api = "http://localhost:3000/api/Users/login?include=user";
     return this.htttp
@@ -37,10 +40,12 @@ export class AuthService {
       )
       .pipe(map(data => data));
   }
+  //guardando el usuario en localStorage con el nombre de currentUser
   setUser(user: UserInterface): void {
     let user_string = JSON.stringify(user);
     localStorage.setItem("currentUser", user_string);
   }
+  //recibimos un token como parametro y guardamos en el localStorage con el nombre de accesstoken
   setToken(token): void {
     localStorage.setItem("accessToken", token);
   }

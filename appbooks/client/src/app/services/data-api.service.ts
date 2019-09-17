@@ -12,7 +12,17 @@ export class DataApiService {
   constructor(private http: HttpClient, private authService: AuthService ) { }
   books: Observable<any>;
   book: Observable<any>;
-
+  public selectedBook: BookInterface = {
+    id: null,
+    titulo: '',
+    idioma: '',
+    descripcion: '',
+    portada: '',
+    precio: '',
+    link_amazon: '',
+    autor: '',
+    oferta: ''
+  };
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
     // 'Accept': 'application/js',
@@ -20,6 +30,10 @@ export class DataApiService {
     Authorization: this.authService.getToken()
   });
   getAllbooks(){
+    const url_api='http://localhost:3000/api/books';
+    return this.http.get(url_api);
+  }
+  getNotOffers(){
     const url_api='http://localhost:3000/api/books?filter[where][oferta]=0';
     return this.http.get(url_api);
   }
@@ -39,13 +53,15 @@ export class DataApiService {
     return this.http.post<BookInterface>(url_api, book, {headers: this.headers})
         .pipe(map(data => data));
   }
-  updateBook(book){
-    // TODO: obtener un token
+  updateBook(book) {
+    // TODO: obtener token
     // TODO: not null
-    let token = this.authService.getToken();
-    const url_api=`http://localhost:3000/api/books?access_token=${token}`;
-    return this.http.put<BookInterface>(url_api, book, {headers: this.headers})
-        .pipe(map(data => data));
+    const bookId = book.bookId;
+    const token = this.authService.getToken();
+    const url_api = `http://localhost:3000/api/books/${bookId}/?access_token=${token}`;
+    return this.http
+      .put<BookInterface>(url_api, book, { headers: this.headers })
+      .pipe(map(data => data));
   }
   deleteBook(id:string){
       // TODO: obtener un token

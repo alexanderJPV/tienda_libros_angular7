@@ -8,6 +8,8 @@ import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OffersComponent } from './components/offers/offers.component';
+import { AuthGuard } from './guards/auth.guard';
+
 //rutas pasarle un objeto path
 const routes: Routes = [
     {
@@ -16,15 +18,17 @@ const routes: Routes = [
     },
     {
       path: 'offers',
-      component: OffersComponent
+      component: OffersComponent,
+      canActivate: [AuthGuard]
     },// TODO: only users auth
     {
       path: 'book/:id',
-      component: DetailsBookComponent
+      component: DetailsBookComponent,
     },
     {
       path: 'admin/list-books',
-      component: ListBooksComponent
+      component: ListBooksComponent,
+      canActivate: [AuthGuard]
     },// TODO: only users auth
     {
       path: 'user/login',
@@ -37,6 +41,7 @@ const routes: Routes = [
     {
       path: 'user/profile',
       component: ProfileComponent,
+      canActivate: [AuthGuard]
     },// TODO: only users auth
     {
       path: '**',
